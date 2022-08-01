@@ -2,7 +2,7 @@
 :: designLaunch
 :: Opens job folder based on user input, customer name and job number.
 :: Author: Seth Schieb
-:: Version 0.2.20220729
+:: Version 0.3.20220801
 :: Added to git
 :::::::::::::::::::::::::::::::::::::::::::::
 
@@ -16,14 +16,22 @@ set /p varcust="Customer: "
 set /p varnum="Job Number: "
 
 ::search directory using customer name as a wildcard
-for /f "delims=" %%a in ('dir /b /ad /on "K:\%varcust%*"') do set customerfolder=%%a
+for /f "delims=" %%a in ('dir /b /ad /on "\\sts2.local\DFS\Design\%varcust%*"') do set customerfolder=%%a
+
+::Set auto completed path
+set pth="K:\%customerfolder%\"
 
 ::search directory using job number as a wildcard
-for /f "delims=" %%a in ('dir /b /ad /on "K:\%customerfolder%\%varnum%*"') do set jobfolder=%%a
+for /f "delims=" %%a in ('dir /b /ad /on "\\sts2.local\DFS\Design\%customerfolder%\%varnum%*"') do set jobfolder=%%a
 
 
 ::Set auto completed path
-set "pth=K:\%customerfolder%\%jobfolder%\"
+set pth="K:\%customerfolder%\%jobfolder%\"
+
+::Cleanup path string working in escape characters
+::& => ^&
+setlocal EnableDelayedExpansion
+set "pth=%pth:&=^&%"
 
 ::Open explorer to the found path
 explorer %pth%
