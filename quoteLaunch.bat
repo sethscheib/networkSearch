@@ -2,7 +2,7 @@
 :: quoteLaunch
 :: Opens quote folder based on user input, customer name and quote number.
 :: Author: Seth Schieb
-:: Version 0.3.20220801
+:: Version 1.0
 :: Added to git
 :::::::::::::::::::::::::::::::::::::::::::::
 
